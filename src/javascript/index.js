@@ -1,4 +1,5 @@
 import './icons.js'
+// 左右滑动效果
 import Swiper from './swiper.js'
 
 class Player {
