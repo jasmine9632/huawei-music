@@ -62,15 +62,20 @@ class Player {
         }
 
         let swiper = new Swiper(this.$('.panels'))
+        let _this = this
         swiper.on('swipLeft', function() {
             this.classList.remove('panel1')
             this.classList.add('panel2')
+            _this.$$('.balls span')[0].classList.remove('current')
+            _this.$$('.balls span')[1].classList.add('current')
             console.log('left')
         })
 
         swiper.on('swipRight', function() {
             this.classList.remove('panel2')
             this.classList.add('panel1')
+            _this.$$('.balls span')[0].classList.add('current')
+            _this.$$('.balls span')[1].classList.remove('current')
             console.log('right')
         })
     }

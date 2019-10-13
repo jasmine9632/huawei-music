@@ -255,18 +255,18 @@ var Player =
 /*#__PURE__*/
 function () {
   function Player(node) {
-    var _this = this;
+    var _this2 = this;
 
     _classCallCheck(this, Player);
 
     this.root = typeof node === 'string' ? document.querySelector(node) : node;
 
     this.$ = function (selector) {
-      return _this.root.querySelector(selector);
+      return _this2.root.querySelector(selector);
     };
 
     this.$$ = function (selector) {
-      return _this.root.querySelectorAll(selector);
+      return _this2.root.querySelectorAll(selector);
     };
 
     this.songList = [];
@@ -281,15 +281,15 @@ function () {
   _createClass(Player, [{
     key: "start",
     value: function start() {
-      var _this2 = this;
+      var _this3 = this;
 
       fetch('https://jirengu.github.io/data-mock/huawei-music/music-list.json').then(function (res) {
         return res.json();
       }).then(function (data) {
         console.log(data);
-        _this2.songList = data;
+        _this3.songList = data;
 
-        _this2.loadSong();
+        _this3.loadSong();
       });
     }
   }, {
@@ -331,21 +331,34 @@ function () {
       };
 
       var swiper = new _swiper.default(this.$('.panels'));
+
+      var _this = this;
+
       swiper.on('swipLeft', function () {
         this.classList.remove('panel1');
         this.classList.add('panel2');
+
+        _this.$$('.balls span')[0].classList.remove('current');
+
+        _this.$$('.balls span')[1].classList.add('current');
+
         console.log('left');
       });
       swiper.on('swipRight', function () {
         this.classList.remove('panel2');
         this.classList.add('panel1');
+
+        _this.$$('.balls span')[0].classList.add('current');
+
+        _this.$$('.balls span')[1].classList.remove('current');
+
         console.log('right');
       });
     }
   }, {
     key: "loadSong",
     value: function loadSong() {
-      var _this3 = this;
+      var _this4 = this;
 
       var songObj = this.songList[this.currentIndex];
       this.$('.header h1').innerText = songObj.title;
@@ -353,7 +366,7 @@ function () {
       this.audio.src = songObj.url;
 
       this.audio.onloadedmetadata = function () {
-        return _this3.$('.time-end').innerText = _this3.formateTime(_this3.audio.duration);
+        return _this4.$('.time-end').innerText = _this4.formateTime(_this4.audio.duration);
       };
 
       this.loadLyric();
@@ -361,23 +374,23 @@ function () {
   }, {
     key: "playSong",
     value: function playSong() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.audio.oncanplaythrough = function () {
-        return _this4.audio.play();
+        return _this5.audio.play();
       };
     }
   }, {
     key: "loadLyric",
     value: function loadLyric() {
-      var _this5 = this;
+      var _this6 = this;
 
       fetch(this.songList[this.currentIndex].lyric).then(function (res) {
         return res.json();
       }).then(function (data) {
         console.log(data.lrc.lyric);
 
-        _this5.setLyrics(data.lrc.lyric);
+        _this6.setLyrics(data.lrc.lyric);
 
         window.lyrics = data.lrc.lyric;
       });
@@ -496,7 +509,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49862" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53386" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
